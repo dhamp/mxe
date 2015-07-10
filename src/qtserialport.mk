@@ -21,3 +21,11 @@ define $(PKG)_BUILD
     $(MAKE) -C '$(1)' -j '$(JOBS)'
     $(MAKE) -C '$(1)' -j 1 install
 endef
+
+define $(PKG)_BUILD_STATIC
+    cd '$(1)' && sed -i 's#SUBDIRS\ =\ src\ examples\ tests#SUBDIRS\ =\ src#g' qtserialport.pro
+    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt/bin/qmake' CONFIG+=staticlib
+    $(MAKE) -C '$(1)' -j '$(JOBS)'
+    $(MAKE) -C '$(1)' -j 1 install
+endef
+
